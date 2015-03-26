@@ -27,4 +27,8 @@ $(function() {
   var TodoShow = modulejs.require('todoShow');
   var view = React.createFactory(TodoShow);
   React.render(view(), $('#tasks-index')[0]);
+
+  var TasksList = modulejs.require('tasksList');
+  var tasksList = React.createFactory(TasksList);
+  React.render(tasksList(), $('#tasks-list')[0]);
 })
