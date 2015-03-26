@@ -30,5 +30,5 @@ $(function() {
 
   var TasksList = modulejs.require('tasksList');
   var tasksList = React.createFactory(TasksList);
-  React.render(tasksList(), $('#tasks-list')[0]);
+  React.render(tasksList({taskData: $.parseJSON($("#tasks-data").html())}), $('#tasks-list')[0]);
 })

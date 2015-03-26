@@ -11,7 +11,8 @@ modulejs.define('taskForm', ['jquery', 'react'], function($, React) {
         method:"POST",
         data:$("form").serialize(),
         success: function(data) {
-          console.log(data);
+          $('#tasks-list').trigger('data-updated', [data]);
+          React.unmountComponentAtNode($("#tasks-form")[0]);
         }
       });
     },

@@ -7,7 +7,7 @@ class TasksController < ApplicationController
 		task = Task.new strong_params
 
     if task.save
-      render json: task
+      render json: Task.all
     else
       render json: {
         errors: task.errors.full_messages,

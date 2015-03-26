@@ -11,3 +11,5 @@
 /log/*
 !/log/.keep
 /tmp
+
+/app/assets/javascripts/_compiled_components/.module-cache
