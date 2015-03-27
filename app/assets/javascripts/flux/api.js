@@ -1,7 +1,6 @@
 modulejs.define('api', ['jquery', 'appDispatcher'], function($, AppDispatcher) {
   var TIMEOUT = 10000;
-  var GET = 'get';
-  var POST = 'post'
+  var GET = 'get', POST = 'post', PATCH = 'patch'
   
   function dispatch(key, values) {
     AppDispatcher.dispatch({ key: key, values: values });
@@ -38,6 +37,7 @@ modulejs.define('api', ['jquery', 'appDispatcher'], function($, AppDispatcher) {
   var Api = function(url, params, key) {
     this.get = function() { ajaxCall(GET, url, params, key); }
     this.post = function() { ajaxCall(POST, url, params, key); }
+    this.patch = function() { ajaxCall(PATCH, url, params, key); }
   }
   
   return Api;

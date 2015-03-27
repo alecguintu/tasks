@@ -1,5 +1,6 @@
 modulejs.define('taskConstants', [], function() {
   return {
-    CREATE: 'task_create'
+    CREATE: 'task_create',
+    UPDATE: 'task_update'
   };
 });

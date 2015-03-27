@@ -1,4 +1,4 @@
-modulejs.define('taskForm', ['jquery', 'react'], function($, React) {
+modulejs.define('taskForm', ['jquery', 'react', 'taskAction'], function($, React, TaskAction) {
 	
   var taskForm = React.createClass({
 
@@ -7,27 +7,13 @@ modulejs.define('taskForm', ['jquery', 'react'], function($, React) {
     _onSubmit: function(e) {
       e.preventDefault();
 
-      var _url = '', _method = '';
-
-      _id = $('form').find('[name="task[id]"]').val()
-
-      if (_id) {
-        _url = 'tasks/' + _id
-        _method = 'PATCH'
+      if (this.props.id) {
+        TaskAction.update(this.props.id, $('form').serialize());
       } else {
-        _url = 'tasks'
-        _method = 'POST'
+        TaskAction.create($('form').serialize());
       }
 
-      $.ajax({
-        url: _url,
-        method: _method,
-        data: $("form").serialize(),
-        success: function(data) {
-          $('#tasks-list').trigger('data-updated', [data]);
-          React.unmountComponentAtNode($("#tasks-form")[0]);
-        }
-      });
+      React.unmountComponentAtNode($("#tasks-form")[0]);
     },
 
     componentDidMount: function() {
@@ -37,7 +23,6 @@ modulejs.define('taskForm', ['jquery', 'react'], function($, React) {
     render: function() {
       return (
         <form onSubmit={this._onSubmit}>
-          <input type="hidden" name="task[id]" defaultValue={this.props.id} />
           <input type="text" name="task[name]" defaultValue={this.props.name} />
         </form>
       )

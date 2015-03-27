@@ -32,6 +32,10 @@ modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter', 'appDispat
       create(payload.values);
       TaskStore.emit(TaskConstants.CREATE);
       break;
+    case TaskConstants.UPDATE:
+      create(payload.values);
+      TaskStore.emit(TaskConstants.CREATE);
+      break;
       
     }
   });
