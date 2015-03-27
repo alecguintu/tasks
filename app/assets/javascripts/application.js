@@ -18,8 +18,11 @@
 
 modulejs.define('react', React);
 modulejs.define('immutable', Immutable);
+modulejs.define('flux', Flux);
 modulejs.define('jquery', function() { return jQuery; });
 modulejs.define('underscore', function() { return _; });
+modulejs.define('eventEmitter', function() { return EventEmitter; });
+
 
 $(function() {
   var React = modulejs.require('react');
@@ -29,5 +32,5 @@ $(function() {
 
   var TasksList = modulejs.require('tasksList');
   var tasksList = React.createFactory(TasksList);
-  React.render(tasksList({taskData: $.parseJSON($("#tasks-data").html())}), $('#tasks-list')[0]);
+  React.render(tasksList(), $('#tasks-list')[0]);
 })
