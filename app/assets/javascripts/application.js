@@ -17,6 +17,7 @@
 //= require_tree .
 
 modulejs.define('react', React);
+modulejs.define('immutable', Immutable);
 modulejs.define('jquery', function() { return jQuery; });
 modulejs.define('underscore', function() { return _; });
 

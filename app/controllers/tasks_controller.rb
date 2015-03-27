@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 	def index
-    @tasks = Task.all
+    @tasks = Task.all.order(:created_at)
 	end
 
 	def create
@@ -20,7 +20,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
 
     if task.update strong_params
-      render json: Task.all
+      render json: Task.all.order(:created_at)
     else
       render json: {
         errors: task.errors.full_messages,
