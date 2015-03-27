@@ -7,7 +7,7 @@ class TasksController < ApplicationController
 		task = Task.new strong_params
 
     if task.save
-      render json: Task.all
+      render json: task
     else
       render json: {
         errors: task.errors.full_messages,
@@ -20,7 +20,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
 
     if task.update strong_params
-      render json: Task.all.order(:created_at)
+      render json: task
     else
       render json: {
         errors: task.errors.full_messages,

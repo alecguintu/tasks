@@ -1,5 +1,4 @@
-modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter'], function(_, $, EventEmitter) {
-
+modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter', 'appDispatcher', 'taskConstants'], function(_, $, EventEmitter, AppDispatcher, TaskConstants) {
   var _tasks = Immutable.OrderedMap();
   
   // Private methods
@@ -8,7 +7,6 @@ modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter'], function(
   }
 
   // Public methods
-
   var TaskStore = {
     all: function() {
       // If initially empty, check inside the html given by rails' controller
@@ -18,8 +16,25 @@ modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter'], function(
 
       return _tasks;
     },
+
+    addThisListener: function(eventName, callback) { this.on(eventName, callback) },
+    removeThisListener: function(eventName, callback) { this.removeListener(eventName, callback) },
+
+    emit: function(eventName) { this.emit(eventName) },
   }
   _.extend(TaskStore, EventEmitter.prototype);
 
-  return TaskStore
+  AppDispatcher.register(function(payload) {
+    console.log("I'm listening to ->", payload);
+
+    switch (payload.key) {
+    case TaskConstants.CREATE:
+      create(payload.values);
+      TaskStore.emit(TaskConstants.CREATE);
+      break;
+      
+    }
+  });
+
+  return TaskStore;
 });

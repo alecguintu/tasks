@@ -1,4 +1,4 @@
-modulejs.define('tasksList', ['jquery', 'react', 'immutable', 'taskStore', 'tasksPerList'], function($, React, Immutable, TaskStore, TasksPerList) {
+modulejs.define('tasksList', ['jquery', 'react', 'immutable', 'taskStore', 'taskConstants', 'tasksPerList'], function($, React, Immutable, TaskStore, TaskConstants, TasksPerList) {
 	
   var tasksList = React.createClass({
     displayName: 'tasksList',
@@ -8,14 +8,18 @@ modulejs.define('tasksList', ['jquery', 'react', 'immutable', 'taskStore', 'task
         tasks: TaskStore.all()
       }
     },
-    shouldComponentUpdate: function(nextProps, nextState) {
-      return Immutable.fromJS(nextState.tasks) !== Immutable.fromJS(this.state.tasks);
-    },
+
     componentDidMount: function() {
-      $('#tasks-list').on('data-updated', function(e, data) {
-        _this.setState({tasks: data})
+      var _this = this;
+      TaskStore.addThisListener(TaskConstants.CREATE, function() {
+        _this.setState({tasks: TaskStore.all()});
       });
     },
+
+    componentWillUnmount: function() {
+      TaskStore.removeThisListener(TaskConstants.CREATE);
+    },
+
     render: function() {
       return (
         React.createElement("ul", null, 

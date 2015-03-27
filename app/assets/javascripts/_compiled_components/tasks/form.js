@@ -1,4 +1,4 @@
-modulejs.define('taskForm', ['jquery', 'react'], function($, React) {
+modulejs.define('taskForm', ['jquery', 'react', 'taskConstants', 'taskAction'], function($, React, TaskConstants, TaskAction) {
 	
   var taskForm = React.createClass({
 
@@ -7,27 +7,30 @@ modulejs.define('taskForm', ['jquery', 'react'], function($, React) {
     _onSubmit: function(e) {
       e.preventDefault();
 
-      var _url = '', _method = '';
+      TaskAction.create($('form').serialize());
+      React.unmountComponentAtNode($("#tasks-form")[0]);
 
-      _id = $('form').find('[name="task[id]"]').val()
-
-      if (_id) {
-        _url = 'tasks/' + _id
-        _method = 'PATCH'
-      } else {
-        _url = 'tasks'
-        _method = 'POST'
-      }
-
-      $.ajax({
-        url: _url,
-        method: _method,
-        data: $("form").serialize(),
-        success: function(data) {
-          $('#tasks-list').trigger('data-updated', [data]);
-          React.unmountComponentAtNode($("#tasks-form")[0]);
-        }
-      });
+      // var _url = '', _method = '';
+      //
+      // _id = $('form').find('[name="task[id]"]').val()
+      //
+      // if (_id) {
+      //   _url = 'tasks/' + _id
+      //   _method = 'PATCH'
+      // } else {
+      //   _url = 'tasks'
+      //   _method = 'POST'
+      // }
+      //
+      // $.ajax({
+      //   url: _url,
+      //   method: _method,
+      //   data: $("form").serialize(),
+      //   success: function(data) {
+      //     $('#tasks-list').trigger('data-updated', [data]);
+      //     React.unmountComponentAtNode($("#tasks-form")[0]);
+      //   }
+      // });
     },
 
     componentDidMount: function() {
