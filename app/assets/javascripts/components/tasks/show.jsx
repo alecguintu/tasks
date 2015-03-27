@@ -1,8 +1,8 @@
-modulejs.define('todoShow', ['jquery', 'react', 'taskForm'], function($, React, TaskForm) {
+modulejs.define('taskShow', ['jquery', 'react', 'taskForm'], function($, React, TaskForm) {
 	
-  var todoShow = React.createClass({
+  var taskShow = React.createClass({
 
-    displayName: 'todoShow',
+    displayName: 'taskShow',
 
     _onClick: function() {
       React.render(
@@ -18,6 +18,6 @@ modulejs.define('todoShow', ['jquery', 'react', 'taskForm'], function($, React, 
 
   });
 
-  return todoShow;
+  return taskShow;
 
 });

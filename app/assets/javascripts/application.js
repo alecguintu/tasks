@@ -10,23 +10,21 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require libs/modulejs.min
+//= require libs/modulejs-1.5.0
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
 
-modulejs.define('jquery', function() {
-  return jQuery;
-});
-
 modulejs.define('react', React);
+modulejs.define('jquery', function() { return jQuery; });
+modulejs.define('underscore', function() { return _; });
 
 $(function() {
   var React = modulejs.require('react');
-  var TodoShow = modulejs.require('todoShow');
-  var view = React.createFactory(TodoShow);
-  React.render(view(), $('#tasks-index')[0]);
+  var TaskShow = modulejs.require('taskShow');
+  var taskShow = React.createFactory(TaskShow);
+  React.render(taskShow(), $('#tasks-index')[0]);
 
   var TasksList = modulejs.require('tasksList');
   var tasksList = React.createFactory(TasksList);
