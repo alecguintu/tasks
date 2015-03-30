@@ -1,7 +1,7 @@
 modulejs.define('api', ['jquery', 'appDispatcher'], function($, AppDispatcher) {
   var TIMEOUT = 10000;
-  var GET = 'get', POST = 'post', PATCH = 'patch'
-  
+  var GET = 'get', POST = 'post', PATCH = 'patch', DESTROY = 'delete';
+
   function dispatch(key, values) {
     AppDispatcher.dispatch({ key: key, values: values });
   }
@@ -14,7 +14,7 @@ modulejs.define('api', ['jquery', 'appDispatcher'], function($, AppDispatcher) {
 
   function complete(key, jqXHR, textStatus) { }
 
-  function ajaxCall(requestType, url, params, key) {
+  function ajaxCall(requestType, key, url, params) {
     return(
       $.ajax({
         type: requestType,
@@ -34,11 +34,12 @@ modulejs.define('api', ['jquery', 'appDispatcher'], function($, AppDispatcher) {
     )
   }
 
-  var Api = function(url, params, key) {
-    this.get = function() { ajaxCall(GET, url, params, key); }
-    this.post = function() { ajaxCall(POST, url, params, key); }
-    this.patch = function() { ajaxCall(PATCH, url, params, key); }
+  var Api = function(key, url, params) {
+    this.get = function() { ajaxCall(GET, key, url, params); }
+    this.post = function() { ajaxCall(POST, key, url, params); }
+    this.patch = function() { ajaxCall(PATCH, key, url, params); }
+    this.destroy = function() { ajaxCall(DESTROY, key, url) }
   }
-  
+
   return Api;
 });

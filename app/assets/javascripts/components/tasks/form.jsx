@@ -1,7 +1,6 @@
 modulejs.define('taskForm', ['jquery', 'react', 'taskAction'], function($, React, TaskAction) {
 	
   var taskForm = React.createClass({
-
     displayName: 'taskForm',
 
     _onSubmit: function(e) {

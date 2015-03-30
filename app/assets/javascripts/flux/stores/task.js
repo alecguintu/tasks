@@ -1,17 +1,28 @@
 modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter', 'appDispatcher', 'taskConstants'], function(_, $, EventEmitter, AppDispatcher, TaskConstants) {
+  // Handler for the store model
   var _tasks = Immutable.OrderedMap();
   
   // Private methods
-  function create(params) {
+  function _create(params) {
     _tasks = _tasks.set(params.id, Immutable.fromJS(params))
+  }
+
+  function _update(params) {
+    // _tasks = _tasks.update(params.id, Immutable.fromJS(params))
+    _tasks = _tasks.set(params.id, Immutable.fromJS(params))
+  }
+
+  function _destroy(params) {
+    _tasks = _tasks.delete(params.id)
   }
 
   // Public methods
   var TaskStore = {
+    // Accessor for `_tasks` store model
     all: function() {
-      // If initially empty, check inside the html given by rails' controller
+      // This shouldn't be here as it reloads from static linked data on HTML whenever the data gets emptied out
       if (_tasks.size == 0) {
-        _.each($.parseJSON($("#tasks-data").html()), function(task) { create(task) })
+        _.each($.parseJSON($("#tasks-data").html()), function(task) { _create(task) })
       }
 
       return _tasks;
@@ -20,7 +31,7 @@ modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter', 'appDispat
     addThisListener: function(eventName, callback) { this.on(eventName, callback) },
     removeThisListener: function(eventName, callback) { this.removeListener(eventName, callback) },
 
-    emit: function(eventName) { this.emit(eventName) },
+    emitThis: function(eventName) { this.emit(eventName) },
   }
   _.extend(TaskStore, EventEmitter.prototype);
 
@@ -29,14 +40,16 @@ modulejs.define('taskStore', ['underscore', 'jquery', 'eventEmitter', 'appDispat
 
     switch (payload.key) {
     case TaskConstants.CREATE:
-      create(payload.values);
-      TaskStore.emit(TaskConstants.CREATE);
+      _create(payload.values);
+      TaskStore.emitThis(TaskConstants.CREATE);
       break;
     case TaskConstants.UPDATE:
-      create(payload.values);
-      TaskStore.emit(TaskConstants.CREATE);
+      _update(payload.values);
+      TaskStore.emitThis(TaskConstants.CREATE);
       break;
-      
+    case TaskConstants.DESTROY:
+      _destroy(payload.values);
+      TaskStore.emit(TaskConstants.CREATE)
     }
   });
 

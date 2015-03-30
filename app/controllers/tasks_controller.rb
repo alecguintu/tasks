@@ -33,7 +33,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
 
     if task.delete
-      render json: Task.all
+      render json: task
     else
       render json: {
         errors: task.errors.full_messages,

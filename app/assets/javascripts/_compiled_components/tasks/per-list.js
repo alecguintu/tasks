@@ -1,4 +1,4 @@
-modulejs.define('tasksPerList', ['jquery', 'react', 'immutableRenderMixin', 'taskForm'], function($, React, ImmutableRenderMixin, TaskForm) {
+modulejs.define('tasksPerList', ['jquery', 'react', 'immutableRenderMixin', 'taskForm', 'taskAction'], function($, React, ImmutableRenderMixin, TaskForm, TaskAction) {
 	
   var tasksPerList = React.createClass({
     displayName: 'tasksPerList',
@@ -14,13 +14,7 @@ modulejs.define('tasksPerList', ['jquery', 'react', 'immutableRenderMixin', 'tas
     _onDelete: function(e) {
       e.preventDefault();
 
-      $.ajax({
-        url: 'tasks/' + this.props.id,
-        method: 'DELETE',
-        success: function(data) {
-          $('#tasks-list').trigger('data-updated', [data]);
-        }
-      });
+      TaskAction.destroy(this.props.id);
     },
 
     render: function() {
