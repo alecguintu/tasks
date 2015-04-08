@@ -1,17 +1,10 @@
-modulejs.define('taskForm',['jquery','react'], function($, React){
+modulejs.define('taskForm',['jquery','react', 'taskAction'], function($, React, TaskAction){
 	
 	var taskForm = React.createClass({displayName: "taskForm",
-		_onSubmit: function(e){
+		_onSubmit: function(e){      
       e.preventDefault();
-			
-      $.ajax({
-        url: '/tasks',
-        method: 'POST',
-        data: $(e.target).serialize(),
-        success: function(data){
-          console.log(data);
-        }
-      });
+      console.log($(e.target).serialize());
+			TaskAction.create($(e.target).serialize());
 		},
 	  render: function(){ 
       return(

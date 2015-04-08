@@ -1,4 +1,4 @@
-modulejs.define('todoShow', ['jquery','react', 'taskForm', 'taskList'], function($,React, TaskForm, TaskList) {
+modulejs.define('todoShow', ['jquery','react', 'taskForm', 'taskList', 'taskAction','taskStore','taskConstants'], function($,React, TaskForm, TaskList, TaskAction, TaskStore, TaskConstants) {
 	
   var getTask = function(){
     
@@ -8,24 +8,16 @@ modulejs.define('todoShow', ['jquery','react', 'taskForm', 'taskList'], function
 	  _showForm: function(e){
       React.render(<TaskForm />, document.getElementById('task-form'));
 	  },
-    
-    componentDidMount: function(){
-      var selfRef = this;
-      $.ajax({
-        url:'/tasks',
-        method:'GET',        
-        success: function(data)
-        {                
-          if(selfRef.isMounted()){
-            selfRef.setState({items:data});             
-          }            
-        }.bind(selfRef)
-      });    
+    getInitialState: function(){      
+      return {items:[]};
     },
-    getInitialState: function()
-    {
-      return {items:[]}
+    componentDidMount: function() {
+      TaskStore.loadAllData();
+      TaskStore.addThisListener(TaskConstants.LOAD,this._onChange);
     },
+    componentWillUnmount: function() {
+        TaskStore.removeThisListener(TaskConstants.LOAD);
+    },    
     render: function() {      
       return (
 		    <div>
@@ -36,6 +28,10 @@ modulejs.define('todoShow', ['jquery','react', 'taskForm', 'taskList'], function
           </div>      
 		    </div>
       )
+    },
+    
+    _onChange: function(){
+      this.setState({items:TaskStore.getAllData()});
     }
   });
 
