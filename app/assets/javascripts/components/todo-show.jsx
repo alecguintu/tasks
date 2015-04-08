@@ -8,16 +8,16 @@ modulejs.define('todoShow', ['jquery','react', 'taskForm', 'taskList'], function
 	  _showForm: function(e){
       React.render(<TaskForm />, document.getElementById('task-form'));
 	  },
+    
     componentDidMount: function(){
       var selfRef = this;
       $.ajax({
         url:'/tasks',
         method:'GET',        
         success: function(data)
-        {
-          console.log(selfRef);
+        {                
           if(selfRef.isMounted()){
-            selfRef.setState({items:data});
+            selfRef.setState({items:data});             
           }            
         }.bind(selfRef)
       });    
@@ -26,8 +26,7 @@ modulejs.define('todoShow', ['jquery','react', 'taskForm', 'taskList'], function
     {
       return {items:[]}
     },
-    render: function() {
-      console.log(this.state.items)
+    render: function() {      
       return (
 		    <div>
           <p onClick={this._showForm}>Create Todo</p>

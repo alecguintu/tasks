@@ -16,11 +16,12 @@
 //= require turbolinks
 //= require_tree .
 
-modulejs.define('jquery', function() {
-  return jQuery;
-});
-
-modulejs.define('react', React);
+  modulejs.define('react', React);
+  modulejs.define('immutable', Immutable);
+  modulejs.define('flux', Flux);
+  modulejs.define('jquery', function() { return jQuery; });
+  modulejs.define('underscore', function() { return _; });
+  modulejs.define('eventEmitter', function() { return EventEmitter; });  
 
 $(function() {
   var React = modulejs.require('react');
