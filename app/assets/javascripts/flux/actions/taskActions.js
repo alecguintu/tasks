@@ -1,10 +1,8 @@
 modulejs.define('taskAction',['appDispatcher','taskConstants','api'],function(AppDispatcher, taskConstants,Api){
   var todoAction = {
     getAllData: function(){
-      console.log(this)
-      AppDispatcher.dispatch({
-        key: taskConstants.GETALL
-      });
+      api = new Api(taskConstants.LOAD, '/tasks');
+      api.get();
     },
     create: function(params) {
       api = new Api(taskConstants.CREATE, '/tasks', params);

@@ -1,18 +1,17 @@
 modulejs.define('todoShow', ['jquery','react', 'taskForm', 'taskList', 'taskAction','taskStore','taskConstants'], function($,React, TaskForm, TaskList, TaskAction, TaskStore, TaskConstants) {
 	
-  var getTask = function(){
-    
-  }
-  
   var view = React.createClass({    
 	  _showForm: function(e){
-      React.render(<TaskForm />, document.getElementById('task-form'));
+      React.render(<TaskForm hideForm={this._hideForm} />, document.getElementById('task-form'));
 	  },
+    _hideForm: function(){
+      React.unmountComponentAtNode(document.getElementById('task-form'));
+    },
     getInitialState: function(){      
       return {items:[]};
     },
     componentDidMount: function() {
-      TaskStore.loadAllData();
+      TaskAction.getAllData();
       TaskStore.addThisListener(TaskConstants.LOAD,this._onChange);
     },
     componentWillUnmount: function() {

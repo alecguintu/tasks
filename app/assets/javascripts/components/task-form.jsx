@@ -3,8 +3,8 @@ modulejs.define('taskForm',['jquery','react', 'taskAction'], function($, React, 
 	var taskForm = React.createClass({
 		_onSubmit: function(e){      
       e.preventDefault();
-      console.log($(e.target).serialize());
 			TaskAction.create($(e.target).serialize());
+      this.props.hideForm();
 		},
 	  render: function(){ 
       return(
